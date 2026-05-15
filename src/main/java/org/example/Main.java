@@ -11,12 +11,11 @@ import hub.utils.TokenManager;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class Main {
-    public static Dotenv dotenv = Dotenv.load();
+    public static Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     private static JFrame mainFrame;
 
 
     public static void main(String[] args) {
-        // 1. Установка темы
         setupTheme();
 
         SwingUtilities.invokeLater(() -> {
@@ -46,6 +45,10 @@ public class Main {
         UIManager.put("ScrollBar.width", 12);
         UIManager.put("Table.intercellSpacing", new Dimension(0, 0));
         UIManager.put("TableHeader.background", new Color(40, 40, 45));
+    }
+
+    public static void message(String text){
+        JOptionPane.showMessageDialog(mainFrame, text);
     }
 
     @FunctionalInterface

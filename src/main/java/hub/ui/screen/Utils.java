@@ -18,7 +18,7 @@ public class Utils {
         btn.setFocusPainted(false);
         btn.setPreferredSize(new Dimension(0, 45));
 
-        // Магия FlatLaf для скругления (даже если мы меняем фон)
+        //FlatLaf для скругления
         btn.putClientProperty("JButton.buttonType", "roundRect");
 
         return btn;

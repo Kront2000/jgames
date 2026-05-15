@@ -2,6 +2,7 @@ package hub.ui.screen;
 
 import hub.ui.Theme;
 import hub.utils.TokenManager;
+import org.example.Main;
 import org.example.Navigation;
 
 import javax.swing.*;
@@ -43,6 +44,8 @@ public class RegistrationScreen {
                 String response = TokenManager.registration(loginField.getText(), passwordField.getText());
                 if(response == "SUCCESS"){
                     Navigation.show(MenuScreen.menuScreen());
+                } else {
+                    Main.message(response);
                 }
             }
         });

@@ -38,11 +38,11 @@ public class TokenManager {
     public static String registration(String login, String password) {
         try {
             String jsonBody = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", login, password);
-            System.out.println(URI.create(Main.dotenv.get("BASE_URL") + "api/auth/register"));
+            System.out.println(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/auth/register"));
             System.out.println(jsonBody);
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(Main.dotenv.get("BASE_URL") + "api/auth/register"))
+                    .uri(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/auth/register"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
@@ -64,17 +64,17 @@ public class TokenManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "ERROR";
+        return "Ошибка при авторизации";
     }
 
     public static String login(String login, String password) {
         try {
             String jsonBody = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", login, password);
-            System.out.println(URI.create(Main.dotenv.get("BASE_URL") + "api/auth/register"));
+            System.out.println(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/auth/register"));
             System.out.println(jsonBody);
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(Main.dotenv.get("BASE_URL") + "api/auth/login"))
+                    .uri(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/auth/login"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
@@ -89,14 +89,14 @@ public class TokenManager {
             } catch (IOException e) {
                 System.err.println("Ошибка записи в файл!");
                 e.printStackTrace();
-                return "WRITE_ERROR";
+                return "Ошибка записи токена";
             }
             return "SUCCESS";
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "ERROR";
+        return "Ошибка при авторизации";
     }
 
     public static void deleteToken() {

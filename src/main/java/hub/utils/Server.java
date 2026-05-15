@@ -18,7 +18,7 @@ public class Server {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(Main.dotenv.get("BASE_URL") + "api/stat/top/" + gameName))
+                    .uri(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL"))  + "api/stat/top/" + gameName))
                     .GET()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -38,11 +38,11 @@ public class Server {
         try {
             String token = TokenManager.getToken();
             String jsonBody = String.format("{\"gameName\":\"%s\",\"stat\":\"%s\"}", gameName, stat);
-            System.out.println(URI.create(Main.dotenv.get("BASE_URL") + "api/stat/save"));
+            System.out.println(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/stat/save"));
             System.out.println(jsonBody);
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(Main.dotenv.get("BASE_URL") + "api/stat/save"))
+                    .uri(URI.create((Main.dotenv.get("BASE_URL") == null ? "https://jgames-server.onrender.com/" : Main.dotenv.get("BASE_URL")) + "api/stat/save"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", token)
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))

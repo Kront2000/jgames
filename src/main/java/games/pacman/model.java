@@ -1,5 +1,10 @@
 package games.pacman;
 
+import games.flappybird.FlappyBirdLauncher;
+import hub.ui.screen.DetailsScreen;
+import hub.utils.Server;
+import org.example.Navigation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -95,11 +100,8 @@ public class model extends JPanel implements ActionListener {
     private void playGame(Graphics2D g2d) {
 
         if (dying) {
-
             death();
-
         } else {
-
             movePacman();
             drawPacman(g2d);
             moveGhosts(g2d);
@@ -108,7 +110,6 @@ public class model extends JPanel implements ActionListener {
     }
 
     private void showIntroScreen(Graphics2D g2d) {
-
         String start = "Press SPACE to start";
         g2d.setColor(Color.yellow);
         g2d.drawString(start, (SCREEN_SIZE)/4, 150);
@@ -130,9 +131,8 @@ public class model extends JPanel implements ActionListener {
         boolean finished = true;
 
         while (i < N_BLOCKS * N_BLOCKS && finished) {
-            // Проверяем, есть ли в ячейке бит 16 (еда)
             if ((screenData[i] & 16) != 0) {
-                finished = false; // Еда найдена, уровень еще не пройден
+                finished = false;
             }
             i++;
         }
@@ -149,13 +149,12 @@ public class model extends JPanel implements ActionListener {
     }
 
     private void death() {
-
         lives--;
-
         if (lives == 0) {
+            Server.SaveStat("Pacman", (long) score);
+            Navigation.show(DetailsScreen.showGameDetails("Pacman", "Лабиринт", () -> PacmanLauncher.start()));
             inGame = false;
         }
-
         continueLevel();
     }
 
@@ -294,14 +293,12 @@ public class model extends JPanel implements ActionListener {
 
                 g2d.setColor(new Color(0, 72, 251));
 
-                // ИСПРАВЛЕНИЕ 1: Толщина 2px и закругленные концы линий (CAP_ROUND, JOIN_ROUND)
                 g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                 if ((levelData[i] == 0)) {
                     g2d.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
                 }
 
-                // ИСПРАВЛЕНИЕ 2: Убрали "- 1" из координат, чтобы стены соединялись без "дырок"
                 if ((screenData[i] & 1) != 0) {
                     g2d.drawLine(x, y, x, y + BLOCK_SIZE);
                 }
@@ -317,7 +314,6 @@ public class model extends JPanel implements ActionListener {
 
                 if ((screenData[i] & 16) != 0) {
                     g2d.setColor(new Color(255, 255, 255));
-                    // ИСПРАВЛЕНИЕ 3: Точное центрирование точек (Блок 24, точка 6 -> Отступ = 9)
                     g2d.fillOval(x + 9, y + 9, 6, 6);
                 }
 
@@ -366,11 +362,11 @@ public class model extends JPanel implements ActionListener {
             ghostSpeed[i] = validSpeeds[random];
         }
 
-        pacman_x = 7 * BLOCK_SIZE;  //start position
+        pacman_x = 7 * BLOCK_SIZE;
         pacman_y = 11 * BLOCK_SIZE;
-        pacmand_x = 0;	//reset direction move
+        pacmand_x = 0;
         pacmand_y = 0;
-        req_dx = 0;		// reset direction controls
+        req_dx = 0;
         req_dy = 0;
         dying = false;
     }
@@ -398,7 +394,6 @@ public class model extends JPanel implements ActionListener {
     }
 
 
-    //controls
     class TAdapter extends KeyAdapter {
 
         @Override
