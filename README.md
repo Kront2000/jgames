@@ -31,28 +31,31 @@
 
 ```text
 JGames/
-│
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   ├── games/
-│       │   │   ├── breakout/
-│       │   │   ├── flappybird/
-│       │   │   ├── minesweeper/
-│       │   │   ├── pacman/
-│       │   │   └── snake/
-│       │   │
-│       │   └── org/example/
-│       │       └── Main.java
-│       │
-│       └── resources/
-│           ├── breakout/
-│           ├── flappybird/
-│           ├── minesweeper/
-│           └── pacman/
-│
-├── pom.xml
-└── README.md
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── games/               # Игровые модули (Swing/JavaFX)
+│   │   │   │   ├── breakout/        # Арканоид
+│   │   │   │   ├── flappybird/      # Flappy Bird
+│   │   │   │   ├── minesweeper/     # Сапер
+│   │   │   │   ├── pacman/          # Пакман
+│   │   │   │   └── snake/           # Змейка (JavaFX)
+│   │   │   ├── hub/                 # Ядро платформы
+│   │   │   │   ├── entities/        # Модели данных (Player, Game, Stat)
+│   │   │   │   ├── ui/              
+│   │   │   │   │   ├── screen/      # Экраны (Меню, Логин, Детали игры)
+│   │   │   │   │   └── Theme.java   # Стилизация (FlatLaf)
+│   │   │   │   └── utils/           # Работа с API и токенами (Server, TokenManager)
+│   │   │   └── org/example/         
+│   │   │       ├── Main.java        # Точка входа в приложение
+│   │   │       └── Navigation.java  # Роутинг между экранами хаба
+│   │   └── resources/               # Графические ресурсы и конфиги
+│   │       ├── breakout/            # Спрайты для арканоида
+│   │       ├── pacman/              # Ресурсы для пакмана
+│   │       ├── icons/               # Иконки для меню
+│   │       └── .env                 # Переменные окружения (URL сервера)
+├── pom.xml                          # Конфигурация Maven и зависимости
+└── README.md                        # Документация проекта
 ```
 
 * `/src/main/java/games` — Папка в которой находится код для каждой игры.
