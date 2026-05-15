@@ -13,7 +13,7 @@ public class BreakoutLauncher extends JFrame {
 		add(new Board());
 		setTitle("Breakout");
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		pack();
@@ -23,7 +23,6 @@ public class BreakoutLauncher extends JFrame {
 		EventQueue.invokeLater(() -> {
 			var game = new BreakoutLauncher();
 			game.setVisible(true);
-
 		});
 	}
 

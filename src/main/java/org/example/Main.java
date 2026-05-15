@@ -1,69 +1,53 @@
 package org.example;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import games.breakout.BreakoutLauncher;
-import games.flappybird.FlappyBirdLauncher;
-import games.minesweeper.MinesweeperLauncher;
-import games.pacman.PacmanLauncher;
-import games.snake.SnakeLauncher;
+import java.awt.*;
+
+import hub.ui.screen.MenuScreen;
+import hub.ui.screen.RegistrationScreen;
+import hub.utils.TokenManager;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class Main {
+    public static Dotenv dotenv = Dotenv.load();
+    private static JFrame mainFrame;
+
+
     public static void main(String[] args) {
-        // Запуск интерфейса в потоке обработки событий Swing
+        // 1. Установка темы
+        setupTheme();
+
         SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
+            mainFrame = new JFrame("Game Hub");
+
+            Navigation.setMainFrame(mainFrame);
+            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            mainFrame.setSize(450, 650);
+            mainFrame.setLocationRelativeTo(null);
+
+            // Проверка токена и запуск нужного экрана
+            if (TokenManager.hasToken()) {
+                Navigation.show(MenuScreen.menuScreen());
+            } else {
+                Navigation.show(RegistrationScreen.registrationScreen());
+            }
+
+            mainFrame.setVisible(true);
         });
     }
 
-    private static void createAndShowGUI() {
-        // Создание основного окна
-        JFrame frame = new JFrame("Game Hub");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 500);
-        frame.setLayout(new GridLayout(6, 1, 10, 10)); // Сетка для кнопок
-        frame.setLocationRelativeTo(null); // Центрирование на экране
-
-        // Заголовок
-        JLabel label = new JLabel("Выберите игру", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 24));
-        frame.add(label);
-
-        // Создание кнопок для каждой игры
-        frame.add(createGameButton("Breakout", e -> launch(() -> BreakoutLauncher.start())));
-        frame.add(createGameButton("Flappy Bird", e -> launch(() -> FlappyBirdLauncher.start())));
-        frame.add(createGameButton("Snake", e -> launch(() -> SnakeLauncher.start())));
-        frame.add(createGameButton("Pacman", e -> launch(() -> PacmanLauncher.start())));
-        frame.add(createGameButton("Minesweeper", e -> launch(() -> MinesweeperLauncher.start())));
-
-        frame.setVisible(true);
+    private static void setupTheme() {
+        FlatDarkLaf.setup();
+        UIManager.put("Button.arc", 16);
+        UIManager.put("Component.arc", 16);
+        UIManager.put("TextComponent.arc", 16);
+        UIManager.put("ScrollBar.width", 12);
+        UIManager.put("Table.intercellSpacing", new Dimension(0, 0));
+        UIManager.put("TableHeader.background", new Color(40, 40, 45));
     }
 
-    // Утилитный метод для создания стилизованных кнопок
-    private static JButton createGameButton(String name, ActionListener action) {
-        JButton button = new JButton(name);
-        button.setFont(new Font("Arial", Font.PLAIN, 18));
-        button.setFocusPainted(false);
-        button.addActionListener(action);
-        return button;
-    }
-
-    // Метод-обертка для обработки исключений при запуске
-    private static void launch(GameStarter starter) {
-        try {
-            starter.start();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Ошибка запуска игры: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-    }
-
-    // Функциональный интерфейс для удобного запуска
     @FunctionalInterface
-    interface GameStarter {
-        void start() throws Exception;
-    }
+    interface GameStarter { void start() throws Exception; }
 }

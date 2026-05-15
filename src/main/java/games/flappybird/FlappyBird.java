@@ -1,5 +1,9 @@
 package games.flappybird;
 
+import hub.ui.screen.DetailsScreen;
+import hub.utils.Server;
+import org.example.Navigation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -130,6 +134,8 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         else if (gameOver) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
+            Server.SaveStat("FlappyBird", (long) score);
+            Navigation.show(DetailsScreen.showGameDetails("FlappyBird", "Классика", () -> FlappyBirdLauncher.start()));
 
             g.setFont(new Font("Arial", Font.PLAIN, 24));
             g.drawString("Press SPACE to Restart", 55, boardHeight / 2);

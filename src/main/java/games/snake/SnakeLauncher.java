@@ -1,5 +1,8 @@
 package games.snake;
 
+import games.minesweeper.MinesweeperLauncher;
+import hub.ui.screen.DetailsScreen;
+import hub.utils.Server;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import org.example.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,6 +179,7 @@ public class SnakeLauncher extends Application {
 
         for (int i = 1; i < snake.size(); i++) {
             if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
+                Server.SaveStat("Snake",(long) speed - 6);
                 gameOver = true;
             }
         }

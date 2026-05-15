@@ -14,7 +14,7 @@ public class PacmanLauncher extends JFrame{
         pac.setVisible(true);
         pac.setTitle("Pacman");
         pac.setSize(380,420);
-        pac.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        pac.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pac.setLocationRelativeTo(null);
 
     }

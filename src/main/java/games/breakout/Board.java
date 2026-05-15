@@ -130,7 +130,6 @@ public class Board extends JPanel {
     }
 
     private void doGameCycle() {
-
         ball.move();
         paddle.move();
         checkCollision();

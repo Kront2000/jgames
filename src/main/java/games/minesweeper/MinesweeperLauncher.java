@@ -14,7 +14,7 @@ public class MinesweeperLauncher extends JFrame {
         pack();
         setTitle("Minesweeper");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void start() {
